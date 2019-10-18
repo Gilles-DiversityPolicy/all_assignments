@@ -1,6 +1,6 @@
 # Student Information
-Author:  
-Email: 
+Author: Gilles Kepnang 
+Email: gkepnan1@jhu.edu
 
 # Programming Assignment 3 - HDFS Java API
 In this assignment you will modify a maven project by adding code to implement file system functions using the HDFS Java API.
@@ -36,22 +36,34 @@ Implement a few of the commands from the HDFS shell. Try to match the functional
 Command | Notes
 ----------|---------------
 \-ls \[\-d\] \[\-h\] \[\-R\] \[\<path\> ...\] | You have a partially working version. Improve it to support the options
-\-cat \[\-ignoreCrc\] \<src\> | Simply cat the file. What is that ignorecrc flag about?
+\-cat \[\-ignoreCrc\] \<src\> | Simply cat the file. What is that ignorecrc flag about? 
+   The ignoreCrc flag skips the checksum verification, while comparing the file to stdout. 
+   I added code to check for "hdfs://" prefix for hdfs object.
 \-get \[\-p\] \[\-ignoreCrc\] \[\-crc\] \<src\> ... \<localdst\>| Get files from hdfs and save them locally
 \-rm \[\-f\] \[\-r&#124;\-R\] \[\-skipTrash\] \<src\> ...| Remove files from hdfs
 
 # Student Observations
-Challenging but very helpful in understanding the java api for hadoop programming.
+This homework was very insightful. I enjoyed learning about Hadoop FileSystem, FileChecksum, FileStatus, etc. 
+With this Java API, I see how Hadoop filesystem operations are performed. I also see that we have the power to customize Hadoop operations and perform the operations we deem necessary on Hadoop Filesystem. 
+My only hang-up was the set up before using HDFS. Implmenting the commands of this CLI specification was easy and straightforward. 
+
 
 ## Problems Encountered / how you resolved them
-I was unable to implement the -crc option for the -get command. I suspect I was supposed to download that with the file 
-on my local but was not able to find the right functions in the api for it.
+I launched 5 different virtual machines and they each crashed. The issue was that I needed more RAM for the virtual machine. Instead of 10GB, I added 40GB.
+I had issues with the internet connection was not set up properly. So I found YouTube videos on virtualBox network settings.
+I also had issues with Cloudera vm, as it has different permissions within the CentOS image. It did not allow me to setup Apache Hadoop as I wanted. So instead, I created a VDI with 40GB.
+Now in the implementation, I got all the functionality going properly. That was the easy part of this project!! 
+But for me, the setup was full of trials and challenges for me. The actual implmementation only took two days.
+
+As consolation, I created the mkdir functionality to make up for my delay in submission. May Professor consider this a proof of understanding these concepts.
 
 ## Resources you found helpful
 Google 
 
-## Describe any help you recieved
-none
+## Describe any help you received
+Apache Hadoop website
+Emails to Chance
+YouTube videos on network reconnection of CentOS VM on VirtualBox
 
 ## Make recommendations for improvement
-none
+Have a FAQ section to address common HDFS issues (e.g. DataStreamer Exception, temp files for namenode and datanode, etc.)
