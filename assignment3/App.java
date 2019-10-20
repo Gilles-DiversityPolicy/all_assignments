@@ -21,11 +21,11 @@ public class App extends Configured implements Tool
     private GETCmd getCmd;
     private RMCmd rmCmd;
     private MkdirCmd mkdirCmd;
+    private ALLCmd allCmd;
 
     public static void main( String[] args ) throws Exception {
         System.out.println( "Hello Hadoop World!" );
-
-        int ret = ToolRunner.run(new Configuration(), new App(), args);
+	int ret = ToolRunner.run(new Configuration(), new App(), args);
         System.exit(ret);
     }
 
@@ -51,13 +51,12 @@ public class App extends Configured implements Tool
         catCmd = new CATCmd(hdfs,strings, localFileSystem);
         getCmd = new GETCmd(hdfs, strings, localFileSystem);
         rmCmd = new RMCmd(hdfs, strings);
-    	mkdirCmd = new MkdirCmd(strings);
+	allCmd = new ALLCmd(hdfs, strings, localFileSystem);
 
         if(strings.length == 0) {
             printUsage();
             return -1;
         }
-
 
         switch(strings[0]) {
             case "-lsr":
@@ -78,6 +77,9 @@ public class App extends Configured implements Tool
             case "-rm":
                 rmCmd.execute();
                 break;
+	    case "-all":
+		allCmd.execute();
+		break;
             default:
                 printUsage();
                 break;

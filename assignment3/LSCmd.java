@@ -109,7 +109,6 @@ public class LSCmd {
 	{
 	    //Modifications: 
 	    //-->Handles mulitple file paths, see [\<path\> ...\]
-	    
 	    if (line.hasOption("R")){
 	      	recursiveListing(new Path(args[argIndex]),listing);
 	    } 
@@ -119,12 +118,17 @@ public class LSCmd {
 	            listing.add(iterator.next());
 	    	}
 	    }
+
 	    argIndex++;
-	    
+		    
 	    if (argIndex == args.length) break;
+	
 	}
+
 	printListing(listing, line.hasOption("d"), line.hasOption("h"));
+	
 	System.out.println();
+	
     }
     
 }

@@ -59,7 +59,7 @@ public class CATCmd {
 			System.out.println("has -ignoreCrc option");
         }
 				
-		/***		Verify Checksum	for HDFS (apply -ignoreCrc)		***/
+		/***	Verify Checksum	for HDFS (apply -ignoreCrc)	***/
 		if (args[args.length- 1].contains("hdfs"))
 			hdfs.setVerifyChecksum(!line.hasOption("ignoreCrc"));
 		
