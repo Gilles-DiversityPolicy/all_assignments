@@ -1,5 +1,5 @@
 # Student Information
-<put your name and email here for identification purposes>
+<Gilles Kepnang gkepnan1@jhu.edu>
 
 # Programming Assignment 4 - Map Reduce Introduction
 In this assignment you will modify a maven project by adding code to 
@@ -128,21 +128,18 @@ Command | Notes
 wordcount \<inputPath\> \<outputPath\> | Your improved version of word count
 searchindex \<inputPath\> \<outputPath\> | Builds a search index
 
-
 # Student Observations
 Please answer each section or state "none".
 
 ## Problems Encountered / how you resolved them
-<did you encounter any interesting issues? 
-How did you resolve them?>
-
+Yes I encountered a few problems with the MRunit test. But this was a good thing, because the unit tests were valuable in helping me implement my Mapper properly.
+I gained perspective by setting up the unit tests for the search index problem. 
 ## Resources you found helpful
-<did you find a really good reference?
-Please share them here>
+The Oracle site helped earlier. Also, there are numerous sites that give examples of regex patterns. 
 
 ## Describe any help you recieved
-<did you discuss the problems you were having with others?
-Discussion is encouraged as long as you do not share specific solutions>
+No I did not get help from others. Though I should consider discussing with others.
 
 ## Make recommendations for improvement
-<How should I improve this assignment?>
+I cannot think of any recommendations. 
+But I can suggest that professor amend the homework4 specifications, by indicating that /etc/hadoop is within the hadoop binary distribution directory, not the default /etc linux folder.
