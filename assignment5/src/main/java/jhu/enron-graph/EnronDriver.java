@@ -29,8 +29,8 @@ public class EnronDriver extends Configured implements Tool {
         job.setMapperClass(EnronStatsMapper.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
-        job.setCombinerClass(EnronStatsReducer.class);
-        job.setReducerClass(EnronDegreeCentralityReducer.class);
+        job.setReducerClass(EnronStatsReducer.class);
+        //job.setCombinerClass(EnronStatsReducer.class);
         job.setNumReduceTasks(1);
 
         FileInputFormat.addInputPath(job, new Path(inputPath));

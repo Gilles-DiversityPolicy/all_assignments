@@ -1,5 +1,5 @@
 # Student Information
-<put your name and email here for identification purposes>
+<Gilles Kepnang gkepnan1@jhu.edu>
 
 # Programming Assignment 5 - Map Reduce Wrangling
 In this assignment you will be working with a structured data set and extracting insights from the data.
@@ -119,12 +119,17 @@ You are free to analyze the output of your job using any means you have availabl
 
 ### Describe the resulting graph
 For example, how many nodes and edges are there? 
+There are over 600 nodes, and at least 1200 edges.
 
 ### What can degree centrality tell us?
 Are there relationships that really stick out? 
+Degree of centrality tells us which e-mail addresses have the most activity.
 
 ### Any additional insights you have
-
+In particular, I can see how MapReduce would be applied by say a "Microsoft Outlook" or "G-mail". 
+Let's give a scenario. 
+In an IT environment, this degree centrality can give IT administrators valuable information about the employee directory and which accounts provide communication activity on the corporate network. 
+This is a valuable implementation.
 
 ## Command Line Interface Specification
 
@@ -139,16 +144,14 @@ degree-centrality [-tt #] [-ct #] \<inputPath\> \<outputPath\> | Produce the deg
 Please answer each section or state "none".
 
 ## Problems Encountered / how you resolved them
-<did you encounter any interesting issues? 
-How did you resolve them?>
+Issues I encountered: Creating a Reducer Test without a Mapper Test (assuming that the Mapper Input would be the .json file name)
+Steps to resolve it: I assessed the Mapper implementation and made it as simple as possible. The Reducer did the bulk of the work.
 
 ## Resources you found helpful
-<did you find a really good reference?
-Please share them here>
+Google searches of Apache hadoop.io
 
 ## Describe any help you recieved
-<did you discuss the problems you were having with others?
-Discussion is encouraged as long as you do not share specific solutions>
+No I did not collaborate with any teammates.
 
 ## Make recommendations for improvement
-<How should I improve this assignment?>
+This homework had accurate specifications.

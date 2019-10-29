@@ -44,12 +44,19 @@ public class EnronStatsMapper extends Mapper<LongWritable, Text, Text, Text> {
 	String sender = "";
         for(String k : message.header.keySet()) {
 
+            /*if(k.equals("From"))
+                context.write(new Text( ((String)message.header.get(k) + "["+k+"]")), One);
+            if(k.equals("To") || k.equals("Cc") || k.equals("Bcc")) {
+                List<String> emails = (List<String>)message.header.get(k);
+                for(String e : emails)
+                    context.write(new Text(e), k);
+            }*/
 	    if(k.equals("From"))
                 sender = (String)message.header.get(k);
 	    if( k.equals("To") || k.equals("Cc") ) {
                 List<String> emails = (List<String>)message.header.get(k);
                 for(String recipient : emails)
-                    context.write( new Text(sender+" "+recipient), new Text(k));
+                    context.write( new Text("<"+sender+"> <"+recipient+">"), new Text(k));
             }
         }
 
