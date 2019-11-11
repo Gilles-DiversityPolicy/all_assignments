@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import jhu.avro.EmailSimple;
 import jhu.enron.EmailMessage;
 import jhu.enron.EnronDriver;
+import jhu.enron.EnronDriver2;
+import jhu.enron.EnronDriver3;
 import org.apache.avro.file.DataFileWriter;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumWriter;
@@ -75,11 +77,57 @@ public class App extends Configured implements Tool
         return ToolRunner.run(conf, new EnronDriver(), new String[]{});
     }
 
+	int runEmailSelect(String[] strings) throws Exception {
+        Configuration conf = getConf();
+		
+		if (strings.length == 5 && strings.length % 2 == 1) {
+			conf.set("type", strings[1]);
+			conf.set("pattern", strings[2]);	
+		} else if (strings.length == 6) { 
+			conf.set("type", strings[1]);
+			conf.set(strings[2], strings[3]);
+		}
+		else if (strings.length > 6) {
+		  
+		  int counter = 1;
+		  boolean flagOn = false;
+		  for (int i=1; i < strings.length - 2; i++) {
+		   if (i == 1) 
+			conf.set("type", strings[i]);	//Assign type
+		   else if (strings[i].trim().equals("-and")) 
+			conf.set("and", strings[i]);	//Assign and flag
+		   else if (strings[i].contains("-") && !flagOn) { 
+			conf.set(new String("flag" + Integer.toString(counter)), strings[i]);	//Assign flag
+			flagOn = true;
+		   }
+		   else { 
+			conf.set(new String("value" + Integer.toString(counter)), strings[i]);
+			counter++;
+			flagOn = false;
+		   }
+		  }
+		}
+			conf.set("inputPath", strings[strings.length - 2]);
+			conf.set("outputPath", strings[strings.length - 1]);
+		
+        return ToolRunner.run(conf, new EnronDriver2(), new String[]{});
+    }
+	
+	int runEmailHistogram(String [] strings) throws Exception {
+        Configuration conf = getConf();
+        conf.set("inputPath", strings[strings.length - 2]);
+        conf.set("outputPath", strings[strings.length - 1]);
+		conf.set("bin-type", strings[1]);
+        return ToolRunner.run(conf, new EnronDriver3(), new String[]{});
+    }
+
     void showUsage() {
         System.out.println("Usage: ");
         System.out.println("\tenron-avro <localInputPath> <localOutputPath>\ttranslate json to avro EmailSimple record");
         System.out.println("\tenron-stats <inputPath> <outputPath>\trun the enron statistics mapreduce job");
         System.out.println("\tavro-map <inputPath> <outputPath>\trun the avro map only job");
+		System.out.println("\temail-select <type> <options> <inputPath> <outputPath>");
+		System.out.println("\temail-histogram <bin-type> <inputPath> <outputPath>");
     }
 
     public int run(String[] strings) throws Exception {
@@ -90,10 +138,39 @@ public class App extends Configured implements Tool
                 return writeToAvro(strings[1], strings[2]);
             } else if(strings[0].equals("avro-map") && strings.length == 3) {
                 return runEnronTest(strings[1],strings[2]);
-            }
+            } else if(strings[0].equals("email-select") && emailSelectFlagsAreValid(strings)) { 
+				return runEmailSelect(strings);
+			} else if(strings[0].equals("email-histogram") && binTypeIsValid(strings[1]) && strings.length == 4) { 
+				return runEmailHistogram(strings);
+			}
         }
         showUsage();
 
         return -1;
     }
+	
+	boolean emailSelectFlagsAreValid(String [] strings) {
+		switch (strings[1].trim()) {
+		    case "time": 
+			if (strings[2].trim().equals("-start") || strings[2].trim().equals("-end"))
+			    if (strings.length == 4) return true;
+			else {
+			    System.out.println("One of those flags must be read but both should not be required"); 
+			    return false; 
+			}
+		    case "address": 
+		        if (strings[2].trim().equals("-from") || strings[2].trim().equals("-to") || strings[2].trim().equals("-cc"))
+			    if (strings.length < 6) return true;
+		    case "subject": 
+		        if (strings.length == 5) return true;
+		    case "body": 
+		        if (strings.length == 5) return true;
+		    default: 
+		        return false;
+		} 
+	}
+	
+	boolean binTypeIsValid(String str) {
+		return (str.contains("hour") || str.contains("day") || str.contains("month") || str.contains("year"));
+	}
 }
